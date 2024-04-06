@@ -1,5 +1,6 @@
 import { createHmac, randomBytes } from "crypto";
 import { prismaClient } from "../lib/db";
+const jwt = require("jsonwebtoken");
 const crypto = require("node:crypto");
 
 export interface UserRegistrationPayload {
@@ -38,6 +39,32 @@ class UserService {
         role,
       },
     });
+  }
+
+  private static getUserByEmail(email: string) {
+    return prismaClient.user.findUnique({ where: { email } });
+  }
+
+  public static async userLogin(payload: UserLoginPayload) {
+    const { email, password } = payload;
+    const user = await UserService.getUserByEmail(email);
+
+    if (!user) throw new Error("User not Found");
+
+    const userHashPassword = UserService.generateHash(user.salt, password);
+
+    if (userHashPassword !== user.password)
+      throw new Error("Incorrect Password");
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    return token;
   }
 }
 

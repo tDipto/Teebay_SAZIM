@@ -1,6 +1,14 @@
-import UserService, { UserRegistrationPayload } from "../services/user";
+import UserService, {
+  UserLoginPayload,
+  UserRegistrationPayload,
+} from "../services/user";
 
-const queries = {};
+const queries = {
+  userLogin: async (_: any, payload: UserLoginPayload) => {
+    const token = await UserService.userLogin(payload);
+    return token;
+  },
+};
 
 const mutations = {
   userRegistration: async (_: any, payload: UserRegistrationPayload) => {
