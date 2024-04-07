@@ -1,21 +1,5 @@
 import { prismaClient } from "../lib/db";
 
-// export interface AddProductPayload {
-//   name: string;
-//   description: string;
-//   price: number;
-//   categories: string[];
-//   userId: string;
-// }
-
-// export interface EditProductPayload {
-//   id: string;
-//   name: string;
-//   description: string;
-//   price: number;
-//   categories: [];
-// }
-
 export interface AddProductPayload {
   name: string;
   description: string;

@@ -1,5 +1,5 @@
 export const queries = `#graphql
-    getAllProduct: [Product!]!
+    getAllProduct: [Product]
     getSingleProduct(id: String!): Product
     
 `;

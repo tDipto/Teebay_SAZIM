@@ -9,7 +9,6 @@ type Product {
     price: Float
     categories: [Category]
     user: User
-    available: Boolean
     createdAt: DateTime
   }
 
