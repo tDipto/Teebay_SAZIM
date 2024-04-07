@@ -64,6 +64,14 @@ class ProductService {
     }
   }
 
+  public static async getUserProduct(userId: String) {
+    const userProducts = await prismaClient.product.findMany({
+      where: { userId: String(userId) },
+    });
+
+    return userProducts;
+  }
+
   public static async editProduct(payload: EditProductPayload) {
     const { id, name, description, price, categories } = payload;
 
