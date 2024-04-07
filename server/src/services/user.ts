@@ -44,7 +44,6 @@ class UserService {
   private static getUserByEmail(email: string) {
     return prismaClient.user.findUnique({ where: { email } });
   }
-
   public static getUserByID(id: string) {
     return prismaClient.user.findUnique({ where: { id } });
   }

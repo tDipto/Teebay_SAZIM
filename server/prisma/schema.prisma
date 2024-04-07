@@ -21,4 +21,24 @@ model User {
   password  String   
   salt      String
   role      String
+  products  Product []
 }
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  price       Float
+  categories  Category[]  
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  createdAt    DateTime  @default(now())
+}
+
+
+model Category {
+  id       String      @id @default(uuid())
+  name     String
+  products Product[] 
+}
+
