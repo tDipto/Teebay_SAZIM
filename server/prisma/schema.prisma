@@ -23,6 +23,7 @@ model User {
   role      String
   products  Product []
   purchase  Purchase[]
+  rent      Rent[]
 }
 
 model Product {
@@ -35,6 +36,7 @@ model Product {
   userId      String
   createdAt   DateTime  @default(now())
   purchase    Purchase?
+  rent        Rent?
   available   Boolean    @default(true)
 }
 
@@ -52,8 +54,16 @@ model Purchase {
   productId  String   @unique
   user       User     @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId     String
-
-
   createdAt  DateTime @default(now())
 }
 
+model Rent {
+  id         String   @id @default(uuid())
+  product    Product  @relation(fields: [productId], references: [id],onDelete: Cascade)
+  productId  String   @unique
+  user       User     @relation(fields: [userId], references: [id],onDelete: Cascade)
+  userId     String
+  startTime  DateTime
+  endTime    DateTime
+  createdAt  DateTime  @default(now())
+}

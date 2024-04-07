@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { Product } from "../product";
 import { Purchase } from "../purchase";
+import { Rent } from "../rent";
 import { User } from "../user";
 
 async function createGraphqlServer() {
@@ -15,12 +16,14 @@ async function createGraphqlServer() {
        ${User.queries}
        ${Product.queries}
        ${Purchase.queries}
+       ${Rent.queries}
         
     }
     type Mutation {
        ${User.mutations}
        ${Product.mutations}
        ${Purchase.mutations}
+       ${Rent.mutations}
        
     }
   `,
@@ -29,11 +32,13 @@ async function createGraphqlServer() {
         ...User.resolvers.queries,
         ...Product.resolvers.queries,
         ...Purchase.resolvers.queries,
+        ...Rent.resolvers.queries,
       },
       Mutation: {
         ...User.resolvers.mutations,
         ...Product.resolvers.mutations,
         ...Purchase.resolvers.mutations,
+        ...Rent.resolvers.mutations,
       },
     },
   });
