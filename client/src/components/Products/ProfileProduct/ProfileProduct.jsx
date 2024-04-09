@@ -25,7 +25,7 @@ const ProfileProduct = ({ query, name }) => {
       ) : (
         data &&
         data.product.map((product, index) => (
-          <Link to={`/product/${index}`} key={index}>
+          <Link to={`/product/${product.id}`} key={index}>
             <Product
               name={product.name}
               description={product.description}

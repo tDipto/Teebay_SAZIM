@@ -15,13 +15,13 @@ const Products = () => {
         </>
       ) : (
         data.getAllProduct.map((product, index) => (
-          <Link className="w-1/3 p-2" to={`/product/${index}`}>
+          <Link className="w-1/3 p-2 " to={`/product/${product.id}`}>
             <Product
               key={product.id}
               name={product.name}
               description={product.description}
               price={product.price}
-              className="m-5 flex-1"
+              className="m-5 flex-1   max-w shadow-2xl "
             />
           </Link>
         ))

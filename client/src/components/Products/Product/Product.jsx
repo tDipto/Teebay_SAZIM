@@ -6,7 +6,8 @@ const Product = (props) => {
     <Card className={className}>
       <Card.Body>
         <Card.Title tag="h2">{name}</Card.Title>
-        {description}
+        <p>{description}</p>
+        <p>TAKA : {price}</p>
       </Card.Body>
     </Card>
   );
