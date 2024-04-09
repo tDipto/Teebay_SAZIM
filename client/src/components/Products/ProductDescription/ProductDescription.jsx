@@ -3,7 +3,10 @@ import { Button, Card } from "react-daisyui";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_BUY_MUTATION } from "../../../graphql/mutations/productMutations/productMutations";
+import {
+  GET_BUY_MUTATION,
+  GET_RENT_MUTATION,
+} from "../../../graphql/mutations/productMutations/productMutations";
 import { GET_SINGLE_PRODUCT_QUERY } from "../../../graphql/queries/productQueries/productQueries";
 import BuyModal from "../../Modals/BuyModal/BuyModal";
 import RentModal from "../../Modals/RentModal/RentModal";
@@ -50,6 +53,11 @@ const ProductDescription = () => {
   const [buyProduct, { data: dataBuy, loading: loadingBuy, error: errorBuy }] =
     useMutation(GET_BUY_MUTATION);
 
+  const [
+    rentProduct,
+    { data: dataRent, loading: loadingRent, error: errorRent },
+  ] = useMutation(GET_RENT_MUTATION);
+
   const handleValueChange = (newValue) => {
     setRangeValue(newValue);
   };
@@ -57,11 +65,6 @@ const ProductDescription = () => {
   const navigateTo = useNavigate();
 
   const handleBuyModal = () => {
-    buyProduct({
-      variables: {
-        productId: id,
-      },
-    });
     setBuyIsModalOpen(!isBuyModalOpen);
   };
 
@@ -70,12 +73,26 @@ const ProductDescription = () => {
   };
 
   const handleBuyProduct = () => {
-    alert("Buy");
+    buyProduct({
+      variables: {
+        productId: id,
+      },
+    });
     navigateTo("/");
   };
 
   const handleRentProduct = () => {
-    alert(`Rent from ${rangeValue.startDate} to ${rangeValue.endDate}`);
+    const startDate = new Date(rangeValue.startDate);
+    const endDate = new Date(rangeValue.endDate);
+
+    alert(`Rent from ${startDate} to ${endDate}`);
+    rentProduct({
+      variables: {
+        productId: id,
+        startTime: startDate.toISOString(),
+        endTime: endDate.toISOString(),
+      },
+    });
     navigateTo("/");
   };
 

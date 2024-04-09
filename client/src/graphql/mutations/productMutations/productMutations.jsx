@@ -21,3 +21,13 @@ export const GET_BUY_MUTATION = gql`
     buyProduct(productId: $productId)
   }
 `;
+
+export const GET_RENT_MUTATION = gql`
+  mutation Mutation(
+    $productId: String!
+    $startTime: DateTime!
+    $endTime: DateTime!
+  ) {
+    rentProduct(productId: $productId, startTime: $startTime, endTime: $endTime)
+  }
+`;
