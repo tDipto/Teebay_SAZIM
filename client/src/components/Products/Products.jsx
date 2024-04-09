@@ -1,11 +1,11 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { Link } from "react-router-dom";
-import { GET_PRODUCT_QUERY } from "../../graphql/queries/productQueries/productQueries";
+import { GET_ALL_PRODUCT_QUERY } from "../../graphql/queries/productQueries/productQueries";
 import Product from "./Product/Product";
 
 const Products = () => {
-  const { loading, error, data } = useQuery(GET_PRODUCT_QUERY);
+  const { loading, error, data } = useQuery(GET_ALL_PRODUCT_QUERY);
 
   return (
     <div className=" mx-2 flex flex-wrap ">

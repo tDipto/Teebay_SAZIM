@@ -4,10 +4,6 @@ import UserService, {
 } from "../services/user";
 
 const queries = {
-  userLogin: async (_: any, payload: UserLoginPayload) => {
-    const token = await UserService.userLogin(payload);
-    return token;
-  },
   getCurrentUser: async (_: any, parameters: any, context: any) => {
     if (!context || !context.user) {
       throw new Error("User not authenticated. Please login");
@@ -22,6 +18,10 @@ const mutations = {
   userRegistration: async (_: any, payload: UserRegistrationPayload) => {
     const res = await UserService.userRegistration(payload);
     return res;
+  },
+  userLogin: async (_: any, payload: UserLoginPayload) => {
+    const token = await UserService.userLogin(payload);
+    return token;
   },
 };
 

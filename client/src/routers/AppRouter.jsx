@@ -7,7 +7,6 @@ import LoginPage from "../pages/LoginPage";
 import ProfilePage from "../pages/ProfilePage";
 import RegistrationPage from "../pages/RegistrationPage";
 import SingleProductPage from "../pages/SingleProductPage";
-
 const AppRouter = () => {
   return (
     <>

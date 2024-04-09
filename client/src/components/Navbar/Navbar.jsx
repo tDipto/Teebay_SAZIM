@@ -1,8 +1,11 @@
 import React from "react";
 import { Button, Menu, Navbar } from "react-daisyui";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavbarComponent = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
   return (
     <>
       <Navbar>
@@ -18,18 +21,35 @@ const NavbarComponent = () => {
             <Menu.Item>
               <Link to="/">Home</Link>
             </Menu.Item>
-            <Menu.Item>
-              <Link to="/product">Sell</Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Link to="/profile">Profile</Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Link to="/registration">Registration</Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Link to="/login">Login</Link>
-            </Menu.Item>
+            {token ? (
+              <>
+                <Menu.Item>
+                  <Link to="/product">Sell</Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link to="/profile">Profile</Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <div
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                      navigate("/login");
+                    }}
+                  >
+                    Logout
+                  </div>
+                </Menu.Item>
+              </>
+            ) : (
+              <>
+                <Menu.Item>
+                  <Link to="/registration">Registration</Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link to="/login">Login</Link>
+                </Menu.Item>
+              </>
+            )}
           </Menu>
         </div>
       </Navbar>

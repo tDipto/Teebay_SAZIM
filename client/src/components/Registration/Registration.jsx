@@ -3,10 +3,9 @@ import { useFormik } from "formik";
 import React from "react";
 import { Button, Card, Form, Hero, Input } from "react-daisyui";
 import { Link, useNavigate } from "react-router-dom";
-import { GET_USER_MUTATION } from "../../graphql/mutations/userMutations/userMutations";
+import { GET_REG_MUTATION } from "../../graphql/mutations/userMutations/userMutations";
 const Registration = () => {
-  const [userRegistration, { data, loading, error }] =
-    useMutation(GET_USER_MUTATION);
+  const [userReg, { data, loading, error }] = useMutation(GET_REG_MUTATION);
   const navigateTo = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -15,7 +14,7 @@ const Registration = () => {
       password: "",
     },
     onSubmit: (values) => {
-      userRegistration({
+      userReg({
         variables: {
           name: values.name,
           email: values.email,
