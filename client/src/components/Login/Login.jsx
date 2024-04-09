@@ -1,9 +1,13 @@
+import { useLazyQuery } from "@apollo/client";
 import { useFormik } from "formik";
 import React from "react";
 
 import { Button, Card, Form, Hero, Input } from "react-daisyui";
 import { Link } from "react-router-dom";
+import { GET_USER_QUERY } from "../../graphql/queries/userQueries/userQueries";
 const Login = () => {
+  const { loading, error, data } = useLazyQuery(GET_USER_QUERY);
+
   const formik = useFormik({
     initialValues: {
       email: "",
