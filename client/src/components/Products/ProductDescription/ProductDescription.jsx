@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-daisyui";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_BUY_MUTATION } from "../../../graphql/mutations/productMutations/productMutations";
 import { GET_SINGLE_PRODUCT_QUERY } from "../../../graphql/queries/productQueries/productQueries";
 import BuyModal from "../../Modals/BuyModal/BuyModal";
 import RentModal from "../../Modals/RentModal/RentModal";
@@ -36,11 +37,18 @@ const ProductDescription = () => {
     endDate: null,
   });
 
-  const { loading, error, data } = useQuery(GET_SINGLE_PRODUCT_QUERY, {
+  const {
+    loading: loadingProduct,
+    error: errorProduct,
+    data: dataProduct,
+  } = useQuery(GET_SINGLE_PRODUCT_QUERY, {
     variables: {
       getSingleProductId: id,
     },
   });
+
+  const [buyProduct, { data: dataBuy, loading: loadingBuy, error: errorBuy }] =
+    useMutation(GET_BUY_MUTATION);
 
   const handleValueChange = (newValue) => {
     setRangeValue(newValue);
@@ -49,6 +57,11 @@ const ProductDescription = () => {
   const navigateTo = useNavigate();
 
   const handleBuyModal = () => {
+    buyProduct({
+      variables: {
+        productId: id,
+      },
+    });
     setBuyIsModalOpen(!isBuyModalOpen);
   };
 
@@ -74,9 +87,9 @@ const ProductDescription = () => {
     <>
       <Card className="m-5 flex-1">
         <Card.Body>
-          <Card.Title tag="h2">{data?.product?.name}</Card.Title>
-          <p>{data?.product?.description}</p>
-          <p>Price: {data?.product?.price}</p>
+          <Card.Title tag="h2">{dataProduct?.product?.name}</Card.Title>
+          <p>{dataProduct?.product?.description}</p>
+          <p>Price: {dataProduct?.product?.price}</p>
           <Card.Actions className="justify-end">
             <Button onClick={handleBuyModal} color="primary">
               Buy
@@ -104,8 +117,12 @@ const ProductDescription = () => {
 
   return (
     <div>
-      {loading && <div>Loading...</div>}
-      {data && data.product === null ? <div>No product found</div> : Product}
+      {loadingProduct && <div>Loading...</div>}
+      {dataProduct && dataProduct.product === null ? (
+        <div>No product found</div>
+      ) : (
+        Product
+      )}
     </div>
   );
 };

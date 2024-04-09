@@ -7,6 +7,7 @@ export const GET_ALL_PRODUCT_QUERY = gql`
       name
       price
       description
+      available
     }
   }
 `;

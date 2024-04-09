@@ -41,6 +41,9 @@ class ProductService {
   public static async getAllProduct() {
     try {
       const products = await prismaClient.product.findMany({
+        where: {
+          available: true, // Filter only available products
+        },
         include: { categories: true, user: true },
       });
       0;

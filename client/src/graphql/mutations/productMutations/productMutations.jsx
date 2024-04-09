@@ -15,3 +15,9 @@ export const GET_ADD_PRODUCT_MUTATION = gql`
     )
   }
 `;
+
+export const GET_BUY_MUTATION = gql`
+  mutation Mutation($productId: String!) {
+    buyProduct(productId: $productId)
+  }
+`;
