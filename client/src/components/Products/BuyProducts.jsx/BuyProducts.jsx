@@ -1,6 +1,7 @@
 import React from "react";
+import { Card } from "react-daisyui";
 import { Link } from "react-router-dom";
-import Product from "./Product/Product";
+import Product from "../Product/Product";
 const demoData = [
   {
     name: "Product 1",
@@ -18,17 +19,20 @@ const demoData = [
     price: "$39.99",
   },
 ];
-const Products = () => {
+const BuyProducts = () => {
   return (
-    <div className=" mx-2 flex flex-wrap ">
+    <div className="">
+      <Card className="mt-5 flex-shrink-0 w-full max-w shadow-2xl bg-base-100 text-center">
+        <h1 className=" p-3 text-md font-bold">Post Items</h1>
+      </Card>
       {demoData.map((product, index) => (
-        <Link className="w-1/3 p-2" to={`/product/${index}`}>
+        <Link to={`/product/${index}`}>
           <Product
             key={index}
             name={product.name}
             description={product.description}
             price={product.price}
-            className="m-5 flex-1"
+            className="m-2 p-2"
           />
         </Link>
       ))}
@@ -36,4 +40,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default BuyProducts;

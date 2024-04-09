@@ -19,6 +19,9 @@ const NavbarComponent = () => {
               <Link to="/">Home</Link>
             </Menu.Item>
             <Menu.Item>
+              <Link to="/product">Sell</Link>
+            </Menu.Item>
+            <Menu.Item>
               <Link to="/profile">Profile</Link>
             </Menu.Item>
             <Menu.Item>

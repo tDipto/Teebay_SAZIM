@@ -1,9 +1,20 @@
 import React from "react";
+import BuyProducts from "../components/Products/BuyProducts.jsx/BuyProducts";
+import SellProducts from "../components/Products/SellProducts.jsx/SellProducts";
+import Profile from "../components/Profile/Profile";
 
 const ProfilePage = () => {
   return (
-    <div>
-      <h1>Profile</h1>
+    <div className="grid grid-cols-5 gap-4 mx-4">
+      <div className="col-span-1">
+        <Profile />
+      </div>
+      <div className="col-span-2">
+        <SellProducts />
+      </div>
+      <div className="col-span-2">
+        <BuyProducts />
+      </div>
     </div>
   );
 };
