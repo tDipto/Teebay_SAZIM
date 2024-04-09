@@ -1,8 +1,13 @@
+import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import React from "react";
 import { Button, Card, Form, Hero, Input } from "react-daisyui";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { GET_USER_MUTATION } from "../../graphql/mutations/userMutations/userMutations";
 const Registration = () => {
+  const [userRegistration, { data, loading, error }] =
+    useMutation(GET_USER_MUTATION);
+  const navigateTo = useNavigate();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -10,11 +15,28 @@ const Registration = () => {
       password: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      userRegistration({
+        variables: {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        },
+      }).then(() => {
+        formik.resetForm();
+        navigateTo("/login");
+      });
     },
   });
   return (
     <>
+      <div className="flex flex-col items-center">
+        {error && <div className="text-red-500 font-bold">{error.message}</div>}
+        {data && (
+          <div className="text-green-500 font-bold">
+            Successful Registration
+          </div>
+        )}
+      </div>
       <Hero>
         <Hero.Content className="flex-col lg:flex-row-reverse">
           <Card className="flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -51,7 +73,7 @@ const Registration = () => {
                   value={formik.values.password}
                 />
 
-                <Button>Signup</Button>
+                <Button className="mt-3">Signup</Button>
 
                 <label className="label label-text-alt">
                   Already have an account?

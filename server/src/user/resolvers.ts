@@ -21,7 +21,7 @@ const queries = {
 const mutations = {
   userRegistration: async (_: any, payload: UserRegistrationPayload) => {
     const res = await UserService.userRegistration(payload);
-    return res.id;
+    return res;
   },
 };
 

@@ -25,11 +25,15 @@ class UserService {
     return hashedPassword;
   }
 
-  public static userRegistration(payload: UserRegistrationPayload) {
+  public static async userRegistration(payload: UserRegistrationPayload) {
     const { name, username, email, password, role } = payload;
+    const user = await UserService.getUserByEmail(email);
+
+    if (user) throw new Error("User already exits");
+
     const salt = randomBytes(32).toString("hex");
 
-    return prismaClient.user.create({
+    const new_user = await prismaClient.user.create({
       data: {
         name,
         username,
@@ -39,6 +43,7 @@ class UserService {
         role,
       },
     });
+    return new_user.id;
   }
 
   private static getUserByEmail(email: string) {
