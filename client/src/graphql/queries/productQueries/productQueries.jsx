@@ -51,6 +51,10 @@ export const GET_SINGLE_PRODUCT_QUERY = gql`
       description
       name
       price
+      available
+      user {
+        id
+      }
     }
   }
 `;

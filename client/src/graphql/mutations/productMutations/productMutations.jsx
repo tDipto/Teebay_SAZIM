@@ -31,3 +31,9 @@ export const GET_RENT_MUTATION = gql`
     rentProduct(productId: $productId, startTime: $startTime, endTime: $endTime)
   }
 `;
+
+export const GET_DELETE_MUTATION = gql`
+  mutation Mutation($deleteProductId: String!) {
+    deleteProduct(id: $deleteProductId)
+  }
+`;
