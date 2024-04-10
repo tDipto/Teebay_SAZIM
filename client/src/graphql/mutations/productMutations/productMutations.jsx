@@ -37,3 +37,23 @@ export const GET_DELETE_MUTATION = gql`
     deleteProduct(id: $deleteProductId)
   }
 `;
+
+export const GET_EDIT_MUTATION = gql`
+  mutation EditProduct(
+    $editProductId: String!
+    $name: String
+    $description: String
+    $price: Float
+    $categories: [String]
+  ) {
+    editProduct(
+      id: $editProductId
+      name: $name
+      description: $description
+      price: $price
+      categories: $categories
+    ) {
+      id
+    }
+  }
+`;

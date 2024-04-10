@@ -55,6 +55,10 @@ export const GET_SINGLE_PRODUCT_QUERY = gql`
       user {
         id
       }
+      categories {
+        name
+        id
+      }
     }
   }
 `;

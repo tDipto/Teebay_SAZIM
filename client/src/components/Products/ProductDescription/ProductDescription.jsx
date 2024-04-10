@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card } from "react-daisyui";
+import { Button, Card, Modal } from "react-daisyui";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useMutation, useQuery } from "@apollo/client";
@@ -12,12 +12,14 @@ import { GET_SINGLE_PRODUCT_QUERY } from "../../../graphql/queries/productQuerie
 import { GET_USER_QUERY } from "../../../graphql/queries/userQueries/userQueries";
 import BuyModal from "../../Modals/BuyModal/BuyModal";
 import RentModal from "../../Modals/RentModal/RentModal";
+import ProductSellForm from "../ProductSellForm/ProductSellForm";
 
 const ProductDescription = () => {
   const { id } = useParams();
   // const [product, setProduct] = useState();
   const [isBuyModalOpen, setBuyIsModalOpen] = useState(false);
   const [isRentModalOpen, setRentIsModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
   const [rangeValue, setRangeValue] = useState({
     startDate: null,
@@ -100,7 +102,10 @@ const ProductDescription = () => {
       navigateTo("/");
     });
   };
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    setEditModalOpen(true);
+    // navigateTo("/product");
+  };
 
   useEffect(() => {
     // setProduct(demoData[id]);
@@ -114,6 +119,14 @@ const ProductDescription = () => {
           <Card.Title tag="h2">{dataProduct?.product?.name}</Card.Title>
           <p>{dataProduct?.product?.description}</p>
           <p>Price: {dataProduct?.product?.price}</p>
+          <div>
+            <p className="font-bold">Categories:</p>
+            <ul>
+              {dataProduct?.product?.categories?.map((category, index) => (
+                <li key={index}>{category.name}</li>
+              ))}
+            </ul>
+          </div>
 
           <Card.Actions className="justify-end">
             {dataProduct?.product?.available === false ? (
@@ -153,6 +166,15 @@ const ProductDescription = () => {
           rangeValue={rangeValue}
           handleValueChange={handleValueChange}
         />
+
+        <Modal open={editModalOpen}>
+          {/* <Modal.Header className="font-bold">Hello!</Modal.Header> */}
+
+          <ProductSellForm
+            dataEdit={dataProduct?.product}
+            setEditModalOpen={setEditModalOpen}
+          />
+        </Modal>
       </Card>
     </>
   );

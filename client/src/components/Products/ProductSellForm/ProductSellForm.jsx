@@ -1,18 +1,30 @@
 import { useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { GET_ADD_PRODUCT_MUTATION } from "../../../graphql/mutations/productMutations/productMutations";
+import {
+  GET_ADD_PRODUCT_MUTATION,
+  GET_EDIT_MUTATION,
+} from "../../../graphql/mutations/productMutations/productMutations";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Card, Checkbox, Form, Input } from "react-daisyui";
-import { GET_ALL_PRODUCT_QUERY } from "../../../graphql/queries/productQueries/productQueries";
-const ProductSellForm = () => {
+import {
+  GET_ALL_PRODUCT_QUERY,
+  GET_SINGLE_PRODUCT_QUERY,
+} from "../../../graphql/queries/productQueries/productQueries";
+const ProductSellForm = ({ dataEdit, setEditModalOpen }) => {
   const [addProduct, { data, loading, error }] = useMutation(
     GET_ADD_PRODUCT_MUTATION,
     {
       refetchQueries: [GET_ALL_PRODUCT_QUERY],
     }
   );
+  const [
+    editProduct,
+    { data: dataEDit, loading: loadingEdit, error: errorEdit },
+  ] = useMutation(GET_EDIT_MUTATION, {
+    refetchQueries: [GET_ALL_PRODUCT_QUERY, GET_SINGLE_PRODUCT_QUERY],
+  });
   const navigateTo = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -21,19 +33,37 @@ const ProductSellForm = () => {
       price: 0,
       categories: [],
     },
+
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
-      addProduct({
-        variables: {
-          name: values.name,
-          description: values.description,
-          price: values.price,
-          categories: [...values.categories],
-        },
-      }).then(() => {
-        formik.resetForm();
-        navigateTo("/");
-      });
+
+      if (dataEdit) {
+        editProduct({
+          variables: {
+            editProductId: dataEdit?.id,
+            name: values.name,
+            description: values.description,
+            price: values.price,
+            categories: [...values.categories],
+          },
+        }).then(() => {
+          // formik.resetForm();
+          setEditModalOpen(false);
+          // navigateTo(`/profile`);
+        });
+      } else {
+        addProduct({
+          variables: {
+            name: values.name,
+            description: values.description,
+            price: values.price,
+            categories: [...values.categories],
+          },
+        }).then(() => {
+          formik.resetForm();
+          navigateTo("/");
+        });
+      }
     },
     validate: (values) => {
       const errors = {};
@@ -43,6 +73,17 @@ const ProductSellForm = () => {
       return errors;
     },
   });
+  useEffect(() => {
+    if (dataEdit) {
+      formik.setValues({
+        name: dataEdit.name || "",
+        description: dataEdit.description || "",
+        price: dataEdit.price || 0,
+        categories: (dataEdit.categories || []).map((category) => category.id),
+      });
+    }
+  }, [dataEdit]);
+
   const categoriesList = [
     { id: "101", name: "ELECTRONICS" },
     { id: "102", name: "FURNITURE" },
@@ -60,15 +101,11 @@ const ProductSellForm = () => {
     formik.setFieldValue("categories", updatedCategories);
   };
 
-  return (
+  const CardItem = (
     <>
-      <div className="flex flex-col items-center">
-        {loading && <div className="text-blue-500 font-bold">Loading...</div>}
-        {error && <div className="text-red-500 font-bold">{error.message}</div>}
-        {data && <div className="text-green-500 font-bold">Product Added</div>}
-      </div>
-      <Card className="mt-5 flex-shrink-0 w-full max-w shadow-2xl bg-base-100 ">
-        <Form className="m-5 p-5" onSubmit={formik.handleSubmit}>
+      {/* {console.log(dataEdit?.id)} */}
+      <Card className="mt-1 flex-shrink-0 w-full max-w shadow-2xl bg-base-100 ">
+        <Form className="m-1 p-5" onSubmit={formik.handleSubmit}>
           <Form.Label title="Name" />
           <Input
             id="name"
@@ -93,6 +130,7 @@ const ProductSellForm = () => {
             required
           />
           <Form.Label title="Price" />
+          {/* {console.log(formik.values.price)} */}
 
           <Input
             id="price"
@@ -120,11 +158,23 @@ const ProductSellForm = () => {
               {/* Display category name */}
             </div>
           ))}
+
           <Button className="mt-4" type="submit">
             Submit
           </Button>
         </Form>
       </Card>
+    </>
+  );
+
+  return (
+    <>
+      <div className="flex flex-col items-center">
+        {loading && <div className="text-blue-500 font-bold">Loading...</div>}
+        {error && <div className="text-red-500 font-bold">{error.message}</div>}
+        {data && <div className="text-green-500 font-bold">Product Added</div>}
+      </div>
+      {CardItem}
     </>
   );
 };
