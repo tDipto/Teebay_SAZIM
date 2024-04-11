@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 import { useFormik } from "formik";
 import React from "react";
 
@@ -6,7 +6,10 @@ import { Button, Card, Form, Hero, Input } from "react-daisyui";
 import { Link, useNavigate } from "react-router-dom";
 import { GET_LOGIN_MUTATION } from "../../graphql/mutations/userMutations/userMutations";
 const Login = () => {
+  // const [userLogin, { data, loading, error }] = useMutation(GET_LOGIN_MUTATION);
   const [userLogin, { data, loading, error }] = useMutation(GET_LOGIN_MUTATION);
+
+  const client = useApolloClient();
   const navigateTo = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -22,10 +25,12 @@ const Login = () => {
         },
       }).then((result) => {
         localStorage.setItem("token", result.data.token);
+
         navigateTo("/");
       });
     },
   });
+
   return (
     <>
       <div className="flex flex-col items-center">
@@ -55,7 +60,7 @@ const Login = () => {
                 <Input
                   id="password"
                   name="password"
-                  type="text"
+                  type="password"
                   placeholder="password"
                   className="input-bordered"
                   onChange={formik.handleChange}

@@ -13,15 +13,20 @@ const Products = () => {
         <>
           <h1>Loading</h1>
         </>
+      ) : data.getAllProduct.length === 0 ? (
+        <h1 className=" p-3 text-md font-bold text-center">No products</h1>
       ) : (
         data.getAllProduct.map((product, index) => (
-          <Link className="w-1/3 p-2 " to={`/product/${product.id}`}>
+          <Link
+            className="w-1/3 p-2"
+            to={`/product/${product.id}`}
+            key={product.id}
+          >
             <Product
-              key={product.id}
               name={product.name}
               description={product.description}
               price={product.price}
-              className="m-5 flex-1   max-w shadow-2xl "
+              className="m-5 flex-1 max-w shadow-2xl"
             />
           </Link>
         ))

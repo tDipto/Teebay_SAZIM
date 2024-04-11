@@ -5,7 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 const NavbarComponent = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-
+  // const client = useApolloClient();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    // client.clearStore();
+    navigate("/login");
+  };
   return (
     <>
       <Navbar>
@@ -30,14 +35,7 @@ const NavbarComponent = () => {
                   <Link to="/profile">Profile</Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <div
-                    onClick={() => {
-                      localStorage.removeItem("token");
-                      navigate("/login");
-                    }}
-                  >
-                    Logout
-                  </div>
+                  <div onClick={handleLogout}>Logout</div>
                 </Menu.Item>
               </>
             ) : (
@@ -50,6 +48,9 @@ const NavbarComponent = () => {
                 </Menu.Item>
               </>
             )}
+            <Menu.Item>
+              <Link to="/profile">Profile</Link>
+            </Menu.Item>
           </Menu>
         </div>
       </Navbar>
