@@ -3,7 +3,9 @@ import React from "react";
 import { Card, Menu } from "react-daisyui";
 import { GET_USER_QUERY } from "../../graphql/queries/userQueries/userQueries";
 const Profile = () => {
-  const { loading, error, data } = useQuery(GET_USER_QUERY);
+  const { loading, error, data } = useQuery(GET_USER_QUERY, {
+    fetchPolicy: "network-only",
+  });
 
   return (
     <Card className="flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 p-5 mt-5">

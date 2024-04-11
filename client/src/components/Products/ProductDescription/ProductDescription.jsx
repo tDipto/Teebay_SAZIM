@@ -8,7 +8,12 @@ import {
   GET_DELETE_MUTATION,
   GET_RENT_MUTATION,
 } from "../../../graphql/mutations/productMutations/productMutations";
-import { GET_SINGLE_PRODUCT_QUERY } from "../../../graphql/queries/productQueries/productQueries";
+import {
+  GET_ALL_PRODUCT_QUERY,
+  GET_SINGLE_PRODUCT_QUERY,
+  GET_USER_BOUGHT_PRODUCT_QUERY,
+  GET_USER_RENT_PRODUCT_QUERY,
+} from "../../../graphql/queries/productQueries/productQueries";
 import { GET_USER_QUERY } from "../../../graphql/queries/userQueries/userQueries";
 import BuyModal from "../../Modals/BuyModal/BuyModal";
 import RentModal from "../../Modals/RentModal/RentModal";
@@ -37,12 +42,16 @@ const ProductDescription = () => {
   });
 
   const [buyProduct, { data: dataBuy, loading: loadingBuy, error: errorBuy }] =
-    useMutation(GET_BUY_MUTATION);
+    useMutation(GET_BUY_MUTATION, {
+      refetchQueries: [GET_ALL_PRODUCT_QUERY, GET_USER_BOUGHT_PRODUCT_QUERY],
+    });
 
   const [
     rentProduct,
     { data: dataRent, loading: loadingRent, error: errorRent },
-  ] = useMutation(GET_RENT_MUTATION);
+  ] = useMutation(GET_RENT_MUTATION, {
+    refetchQueries: [GET_ALL_PRODUCT_QUERY, GET_USER_RENT_PRODUCT_QUERY],
+  });
 
   const [
     deleteProduct,

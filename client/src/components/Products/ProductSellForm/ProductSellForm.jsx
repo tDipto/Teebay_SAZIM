@@ -11,12 +11,13 @@ import { Button, Card, Checkbox, Form, Input } from "react-daisyui";
 import {
   GET_ALL_PRODUCT_QUERY,
   GET_SINGLE_PRODUCT_QUERY,
+  GET_USER_SELL_PRODUCT_QUERY,
 } from "../../../graphql/queries/productQueries/productQueries";
 const ProductSellForm = ({ dataEdit, setEditModalOpen }) => {
   const [addProduct, { data, loading, error }] = useMutation(
     GET_ADD_PRODUCT_MUTATION,
     {
-      refetchQueries: [GET_ALL_PRODUCT_QUERY],
+      refetchQueries: [GET_ALL_PRODUCT_QUERY, GET_USER_SELL_PRODUCT_QUERY],
     }
   );
   const [
