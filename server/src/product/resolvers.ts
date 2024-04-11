@@ -16,7 +16,7 @@ const queries = {
     return res;
   },
 
-  getUserProduct: async (_: any, parameters: any, context: any) => {
+  getUserSellProduct: async (_: any, parameters: any, context: any) => {
     if (!context || !context.user) {
       throw new Error("User not authenticated. Please login to add a product.");
     }

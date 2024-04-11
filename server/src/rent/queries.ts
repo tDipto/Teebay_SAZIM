@@ -1,4 +1,4 @@
 export const queries = `#graphql
-   userRentProduct: [Product]
+   getUserRentProduct: [Product]
     
 `;

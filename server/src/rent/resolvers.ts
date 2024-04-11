@@ -1,7 +1,7 @@
 import { default as RentService, getProductPayload } from "../services/rent";
 
 const queries = {
-  userRentProduct: async (_: any, parameters: any, context: any) => {
+  getUserRentProduct: async (_: any, parameters: any, context: any) => {
     if (!context || !context.user) {
       throw new Error("User not authenticated. Please login to add a product.");
     }

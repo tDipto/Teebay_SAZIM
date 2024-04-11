@@ -13,7 +13,7 @@ export const GET_ALL_PRODUCT_QUERY = gql`
 `;
 export const GET_USER_SELL_PRODUCT_QUERY = gql`
   query GetUserProduct {
-    product: getUserProduct {
+    product: getUserSellProduct {
       id
       description
       name
@@ -24,7 +24,7 @@ export const GET_USER_SELL_PRODUCT_QUERY = gql`
 
 export const GET_USER_BOUGHT_PRODUCT_QUERY = gql`
   query GetUserProduct {
-    product: userBoughtProduct {
+    product: getUserBuyProduct {
       id
       description
       name
@@ -35,7 +35,7 @@ export const GET_USER_BOUGHT_PRODUCT_QUERY = gql`
 
 export const GET_USER_RENT_PRODUCT_QUERY = gql`
   query GetUserProduct {
-    product: userRentProduct {
+    product: getUserRentProduct {
       id
       description
       name

@@ -1,7 +1,7 @@
 import PurchaseService, { getProductPayload } from "../services/purchase";
 
 const queries = {
-  userBoughtProduct: async (_: any, parameters: any, context: any) => {
+  getUserBuyProduct: async (_: any, parameters: any, context: any) => {
     if (!context || !context.user) {
       throw new Error("User not authenticated. Please login to add a product.");
     }

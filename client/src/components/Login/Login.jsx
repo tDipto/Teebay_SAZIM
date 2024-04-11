@@ -5,18 +5,20 @@ import React from "react";
 import { Button, Card, Form, Hero, Input } from "react-daisyui";
 import { Link, useNavigate } from "react-router-dom";
 import { GET_LOGIN_MUTATION } from "../../graphql/mutations/userMutations/userMutations";
-import { GET_USER_BOUGHT_PRODUCT_QUERY } from "../../graphql/queries/productQueries/productQueries";
 const Login = () => {
   // const [userLogin, { data, loading, error }] = useMutation(GET_LOGIN_MUTATION);
-  const [userLogin, { data, loading, error }] = useMutation(
-    GET_LOGIN_MUTATION,
-    {
-      refetchQueries: [GET_USER_BOUGHT_PRODUCT_QUERY],
-    }
-  );
+  const [userLogin, { data, loading, error }] = useMutation(GET_LOGIN_MUTATION);
 
   const client = useApolloClient();
   const navigateTo = useNavigate();
+
+  const EVICT_FIELDS = [
+    "getCurrentUser",
+    "getUserSellProduct",
+    "getUserBuyProduct",
+    "getUserRentProduct",
+  ];
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,7 +33,8 @@ const Login = () => {
         },
       }).then((result) => {
         localStorage.setItem("token", result.data.token);
-
+        // client.cache.evict({ fieldName: "getUserSellProduct" });
+        EVICT_FIELDS.forEach((fieldName) => client.cache.evict({ fieldName }));
         navigateTo("/");
       });
     },
