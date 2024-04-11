@@ -1,3 +1,4 @@
+import { useApolloClient } from "@apollo/client";
 import React from "react";
 import { Button, Menu, Navbar } from "react-daisyui";
 import { Link, useNavigate } from "react-router-dom";
@@ -5,10 +6,19 @@ import { Link, useNavigate } from "react-router-dom";
 const NavbarComponent = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
-  // const client = useApolloClient();
+  const client = useApolloClient();
+  const EVICT_FIELDS = [
+    "getCurrentUser",
+    "getUserSellProduct",
+    "getUserBuyProduct",
+    "getUserRentProduct",
+  ];
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     // client.clearStore();
+    // client.cache.evict({ fieldName: "getUserSellProduct" });
+    EVICT_FIELDS.forEach((fieldName) => client.cache.evict({ fieldName }));
     navigate("/login");
   };
   return (
