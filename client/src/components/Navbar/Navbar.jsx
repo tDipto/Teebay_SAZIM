@@ -58,9 +58,6 @@ const NavbarComponent = () => {
                 </Menu.Item>
               </>
             )}
-            <Menu.Item>
-              <Link to="/profile">Profile</Link>
-            </Menu.Item>
           </Menu>
         </div>
       </Navbar>

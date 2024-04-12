@@ -8,6 +8,11 @@ export const GET_ALL_PRODUCT_QUERY = gql`
       price
       description
       available
+      createdAt
+      categories {
+        name
+        id
+      }
     }
   }
 `;
@@ -15,9 +20,14 @@ export const GET_USER_SELL_PRODUCT_QUERY = gql`
   query GetUserProduct {
     product: getUserSellProduct {
       id
-      description
       name
       price
+      description
+      available
+      categories {
+        name
+        id
+      }
     }
   }
 `;
@@ -26,9 +36,14 @@ export const GET_USER_BOUGHT_PRODUCT_QUERY = gql`
   query GetUserProduct {
     product: getUserBuyProduct {
       id
-      description
       name
       price
+      description
+      available
+      categories {
+        name
+        id
+      }
     }
   }
 `;
@@ -37,9 +52,14 @@ export const GET_USER_RENT_PRODUCT_QUERY = gql`
   query GetUserProduct {
     product: getUserRentProduct {
       id
-      description
       name
       price
+      description
+      available
+      categories {
+        name
+        id
+      }
     }
   }
 `;
@@ -52,6 +72,7 @@ export const GET_SINGLE_PRODUCT_QUERY = gql`
       name
       price
       available
+      createdAt
       user {
         id
       }
