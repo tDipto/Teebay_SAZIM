@@ -1,4 +1,4 @@
-## Teebay Application Implementation Documentation
+# Teebay Application Implementation Documentation
 # Backend Implementation
 # Setup and Dependencies
 Installed necessary dependencies using npm, including @apollo/server, @prisma/client, graphql, jsonwebtoken, etc.
