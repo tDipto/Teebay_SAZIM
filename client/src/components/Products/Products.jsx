@@ -26,7 +26,7 @@ const Products = () => {
               name={product.name}
               description={product.description}
               price={product.price}
-              className="m-5 flex-1 max-w shadow-2xl"
+              className="m-5 flex-1 max-w shadow-2xl h-[200px]"
             />
           </Link>
         ))

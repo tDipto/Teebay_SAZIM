@@ -56,7 +56,9 @@ const ProductDescription = () => {
   const [
     deleteProduct,
     { data: dataDelete, loading: loadingDelete, error: errorDelete },
-  ] = useMutation(GET_DELETE_MUTATION);
+  ] = useMutation(GET_DELETE_MUTATION, {
+    refetchQueries: [GET_ALL_PRODUCT_QUERY],
+  });
 
   const {
     loading: loadingUser,
@@ -163,10 +165,6 @@ const ProductDescription = () => {
             {dataProduct?.product?.price}
           </div>
 
-          <p>
-            Date Posted :{" "}
-            {formatDateWithSuffix(dataProduct?.product?.createdAt)}
-          </p>
           <div>
             <p className="font-bold">Categories:</p>
             <ul>
@@ -174,6 +172,11 @@ const ProductDescription = () => {
                 <li key={index}>{category.name}</li>
               ))}
             </ul>
+
+            <p className="mt-5 pt-5">
+              Date Posted :{" "}
+              {formatDateWithSuffix(dataProduct?.product?.createdAt)}
+            </p>
           </div>
 
           <Card.Actions className="justify-end">
@@ -185,7 +188,11 @@ const ProductDescription = () => {
                 <Button onClick={handleEdit} color="primary">
                   Edit
                 </Button>
-                <Button onClick={handleDelete} color="primary">
+                <Button
+                  className="bg-red-500"
+                  onClick={handleDelete}
+                  color="primary"
+                >
                   Delete
                 </Button>
               </>
