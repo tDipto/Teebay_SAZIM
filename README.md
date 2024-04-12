@@ -27,8 +27,10 @@ npm install
 In both the backend and frontend directories, create a .env file and define the following environment variables:
 
 # Backend (.env file in the backend directory)
+``` sh
 DATABASE_URL=<your-database-url>
 JWT_SECRET=<your-jwt-secret>
+```
 
 4. Run Prisma migrations:
 ``` sh
