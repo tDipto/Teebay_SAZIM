@@ -15,7 +15,7 @@ Clone the Teebay repository to your local machine using the following command:
 Navigate to the project directory and install the dependencies for both the backend and frontend:
 
 ``` sh
-cd teebay
+cd Teebay_SAZIM
 cd backend
 npm install
 
