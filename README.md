@@ -16,10 +16,10 @@ Navigate to the project directory and install the dependencies for both the back
 
 ``` sh
 cd Teebay_SAZIM
-cd backend
+cd server
 npm install
 
-cd ../frontend
+cd ../client
 npm install
 ```
 
@@ -34,7 +34,7 @@ JWT_SECRET=<your-jwt-secret>
 
 4. Run Prisma migrations:
 ``` sh
-cd backend
+cd server
 npx prisma migrate dev
 ```
 
