@@ -28,7 +28,7 @@ In both the backend and frontend directories, create a .env file and define the 
 
 # Backend (.env file in the backend directory)
 ``` sh
-DATABASE_URL= postgresql://<user-name>:<password>@localhost:5432/Teebay_SAZIM?schema=public
+DATABASE_URL= "postgresql://<user-name>:<password>@localhost:5432/Teebay_SAZIM?schema=public"
 JWT_SECRET=<your-jwt-secret>
 ```
 
